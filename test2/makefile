@@ -1,6 +1,6 @@
-myshell:myshell.c
-	gcc -o $@ $^ -std=c99  # -DDEBUG
+test:test.c
+	gcc -o $@ $^ -std=c99
 
 .PHONY:clean
 clean:
-	rm -rf myshell
+	rm -rf test
