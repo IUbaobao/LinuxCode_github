@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <vector>
 #include <cassert>
+#include <cstring>
 using namespace std;
 
 struct thread_data
@@ -94,38 +95,76 @@ void *start_routine(void *arg)
 //     return 0;
 // }
 
-////////////////////////////////////////////////////////////////////////////////////////////
-// 重新认识pthread原生库
-#include <thread>
+//////////分离线程
+// 默认情况下，新创建的线程是joinable的，线程退出后，需要对其进行pthread_join操作，否则无法释放资源，从而造成系统泄漏。
+// 如果不关心线程的返回值，join是一种负担，这个时候，我们可以告诉系统，当线程退出时，自动释放线程资源。
+//int pthread_detach(pthread_t thread);
 
-
-void start_run()
+void* run(void* arg)
 {
-    while(1)
+    char* str=static_cast<char*>(arg);
+    int cnt=5;
+    while(cnt--)
     {
-        cout<<"我是一个线程"<<endl;
+        cout<<str<<"正在运行....."<<endl;
         sleep(1);
+        //可以在新线程中分离
+        //pthread_detach(pthread_self());
     }
+    return nullptr;
 }
 
 int main()
 {
-    // 任何语言，在linux中如果要实现多线程，必定要是用pthread库
-    // 如何看待C++11中的多线程呢？？C++11 的多线程，在Linux环境中，本质是对pthread库的封装！
-    // std::thread t1([]()
-    //                {
-    //                    while (true)
-    //                    {
-    //                        cout << "我是一个线程" << endl;
-    //                        sleep(1);
-    //                    }
-    //                });
-    std::thread t1(start_run);
-    while (true)
-    {
-        cout << "我是主线程........." << endl;
-        sleep(1);
-    }
-    t1.join();
+    pthread_t tid;
+    pthread_create(&tid,nullptr,run,(void*)"线程1");
+
+    //在主线程的分离该线程
+    pthread_detach(tid);
+    sleep(1);//看到的现象是：新线程运行运行1s后，整个进程退出
+    cout<<"主线程已正常退出"<<endl;
+
+    //正常情况要等待
+    // sleep(2);
+    // int ret=pthread_join(tid,nullptr);
+    // //assert(ret==0);
+    // cout<<ret<<":"<<strerror(ret)<<endl;//线程已经分离还等待报错---22:Invalid argument
     return 0;
 }
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+// 重新认识pthread原生库
+// #include <thread>
+// void start_run()
+// {
+//     while(1)
+//     {
+//         cout<<"我是一个线程"<<endl;
+//         sleep(1);
+//     }
+// }
+
+// int main()
+// {
+//     // 任何语言，在linux中如果要实现多线程，必定要是用pthread库
+//     // 如何看待C++11中的多线程呢？？C++11 的多线程，在Linux环境中，本质是对pthread库的封装！
+//     // std::thread t1([]()
+//     //                {
+//     //                    while (true)
+//     //                    {
+//     //                        cout << "我是一个线程" << endl;
+//     //                        sleep(1);
+//     //                    }
+//     //                });
+//     std::thread t1(start_run);
+//     while (true)
+//     {
+//         cout << "我是主线程........." << endl;
+//         sleep(1);
+//     }
+//     t1.join();
+//     return 0;
+// }
