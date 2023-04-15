@@ -21,13 +21,17 @@ public:
         while (is_full()) // 队列为满的时候要在条件变量下阻塞等待
         {
             // 细节1：这里要用while，不能用if，因为有可以存在伪唤醒,又或者wait函数调用失败
+            // 细节2：pthread_cond_wait这个函数的第二个参数，必须是我们正在使用的互斥锁！
+            // a. pthread_cond_wait: 该函数调用的时候，会以原子性的方式，将锁释放，并将自己挂起
+            // b. pthread_cond_wait: 该函数在被唤醒返回的时候，会自动的重新获取你传入的锁
             pthread_cond_wait(&_pcond, &_mutex);
         }
 
         _q.push(in);
         // 来到这里，阻塞队列中一定至少存在一个数据--这个时候可以通知生产者
-        pthread_cond_signal(&_ccond);
+        pthread_cond_signal(&_ccond); // 细节3：pthread_cond_signal：这个函数，可以放在临界区内部，也可以放在外部
         pthread_mutex_unlock(&_mutex);
+        // pthread_cond_signal(&_ccond); 
     }
     void pop(T *out) // 输出型参数：*， // 输入输出型：&
     {
@@ -42,6 +46,7 @@ public:
         // 来到这里，阻塞队列一定至少存在一个空位--这时候可以通知产生者
         pthread_cond_signal(&_pcond);
         pthread_mutex_unlock(&_mutex);
+        // pthread_cond_signal(&_pcond);
     }
 
     ~BlockQueue()
