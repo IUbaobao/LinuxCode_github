@@ -87,7 +87,9 @@ public:
         for (auto &t : _threads)
             delete t;
     }
-
+    //单列模式
+    void operator=(const ThreadPool<T>& ) =delete;//防止赋值
+    ThreadPool(const ThreadPool<T>& t)= delete;//防止拷贝
 public:
     static ThreadPool<T> *getInstance() // 单列模式---饿汉
     {
