@@ -2,7 +2,7 @@
 all: udpClient udpServer
 
 udpClient:udpClient.cc
-	g++ -o $@ $^ -std=c++11
+	g++ -o $@ $^ -lpthread -std=c++11
 udpServer:udpServer.cc 
 	g++ -o $@ $^ -std=c++11
 
