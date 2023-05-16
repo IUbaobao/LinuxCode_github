@@ -1,0 +1,51 @@
+ [NORMAL][2023.05.16 13:50:01] [16941] create socket success: 3
+ [NORMAL][2023.05.16 13:50:01] [16941] bind socket success
+ [NORMAL][2023.05.16 13:50:01] [16941] listen success
+ [NORMAL][2023.05.16 13:50:18] [16941] accept socket success: 4
+ [NORMAL][2023.05.16 13:50:18] [16941] pthread_create success: -454568192
+ [NORMAL][2023.05.16 13:50:32] [16941] accept socket success: 5
+ [NORMAL][2023.05.16 13:50:32] [16941] pthread_create success: -536873216
+ [NORMAL][2023.05.16 13:51:32] [17039] create socket success: 3
+ [NORMAL][2023.05.16 13:51:32] [17039] bind socket success
+ [NORMAL][2023.05.16 13:51:32] [17039] listen success
+ [NORMAL][2023.05.16 13:52:17] [17062] create socket success: 3
+ [NORMAL][2023.05.16 13:52:17] [17062] bind socket success
+ [NORMAL][2023.05.16 13:52:17] [17062] listen success
+ [NORMAL][2023.05.16 13:52:39] [17086] create socket success: 3
+ [NORMAL][2023.05.16 13:52:39] [17086] bind socket success
+ [NORMAL][2023.05.16 13:52:39] [17086] listen success
+ [NORMAL][2023.05.16 13:52:42] [17086] accept socket success: 4
+ [NORMAL][2023.05.16 13:52:42] [17086] pthread_create success: -1860110592
+ [NORMAL][2023.05.16 13:52:49] [17121] create socket success: 3
+ [NORMAL][2023.05.16 13:53:04] [17129] create socket success: 3
+ [NORMAL][2023.05.16 13:53:04] [17129] bind socket success
+ [NORMAL][2023.05.16 13:53:04] [17129] listen success
+ [NORMAL][2023.05.16 13:53:12] [17129] accept socket success: 4
+ [NORMAL][2023.05.16 13:53:12] [17129] pthread_create success: 1093801728
+ [NORMAL][2023.05.16 13:55:13] [17204] create socket success: 3
+ [NORMAL][2023.05.16 13:55:13] [17204] bind socket success
+ [NORMAL][2023.05.16 13:55:13] [17204] listen success
+ [NORMAL][2023.05.16 13:55:17] [17204] accept socket success: 4
+ [NORMAL][2023.05.16 13:55:17] [17204] pthread_create success: 360752896
+ 
+ [NORMAL][2023.05.16 13:57:24] [17316] create socket success: 3
+ [NORMAL][2023.05.16 13:57:24] [17316] bind socket success
+ [NORMAL][2023.05.16 13:57:24] [17316] listen success
+ [NORMAL][2023.05.16 13:57:27] [17316] accept socket success: 4
+ [NORMAL][2023.05.16 13:57:27] [17316] pthread_create success
+ [NORMAL][2023.05.16 13:57:37] [17316] accept socket success: 5
+ [NORMAL][2023.05.16 13:57:37] [17316] pthread_create success
+ [NORMAL][2023.05.16 13:57:51] [17316] client quit sock:5 Closed
+ [NORMAL][2023.05.16 13:57:56] [17316] client quit sock:4 Closed
+ [NORMAL][2023.05.16 13:58:29] [17341] create socket success: 3
+ [NORMAL][2023.05.16 13:58:29] [17341] bind socket success
+ [NORMAL][2023.05.16 13:58:29] [17341] listen success
+ [NORMAL][2023.05.16 13:58:33] [17341] accept socket success: 4
+ [NORMAL][2023.05.16 13:58:33] [17341] pthread_create success
+ [NORMAL][2023.05.16 13:58:35] [17341] client quit sock:4 Closed
+ [NORMAL][2023.05.16 13:58:53] [17367] create socket success: 3
+ [NORMAL][2023.05.16 13:58:53] [17367] bind socket success
+ [NORMAL][2023.05.16 13:58:53] [17367] listen success
+ [NORMAL][2023.05.16 13:58:56] [17367] accept socket success: 4
+ [NORMAL][2023.05.16 13:58:56] [17367] pthread_create success
+ [NORMAL][2023.05.16 13:58:58] [17367] client quit sock:4 closed
