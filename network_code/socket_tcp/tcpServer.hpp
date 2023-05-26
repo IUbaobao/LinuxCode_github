@@ -12,6 +12,8 @@
 #include <signal.h>
 #include <pthread.h>
 #include "log.hpp"
+#include "ThreadPool.hpp"
+#include "Task.hpp"
 using namespace std;
 
 enum{SOCK_ERR,BIND_ERR,LISTEN_ERR,USAGE_ERR};
@@ -80,7 +82,9 @@ public:
 
     void start()
     {
-        signal(SIGCHLD,SIG_IGN);
+        //线程池版
+        ThreadPool<Task>::getInstance()->run();
+        // signal(SIGCHLD,SIG_IGN);
         while(true)
         {
              // 4. server 获取新链接
@@ -121,48 +125,28 @@ public:
             // }
 
             //多线程版
-            pthread_t tid;
-            threadData* td=new threadData(this,sock);
-            int n=pthread_create(&tid,nullptr,threadRoutine,td);
-            if(n==0)
-            {
-                // cout<<"pthread_create success "<<endl;
-                logMessage(NORMAL,"pthread_create success");
-            }
+            // pthread_t tid;
+            // threadData* td=new threadData(this,sock);
+            // int n=pthread_create(&tid,nullptr,threadRoutine,td);
+            // if(n==0)
+            // {
+            //     // cout<<"pthread_create success "<<endl;
+            //     logMessage(NORMAL,"pthread_create success");
+            // }
+
+            ThreadPool<Task>::getInstance()->push(Task(sock,serverIO));
+
         }
     }
 
-    static void* threadRoutine(void* args)
-    {
-        threadData* td=static_cast<threadData*>(args);
-        td->_self->serverIO(td->_sock);
-        delete td;
-        return nullptr;
-    }
-    void serverIO(int sock)
-    {
-        char buff[1024];
-        while(true)
-        {
-            ssize_t n=read(sock,buff,sizeof(buff)-1);
-            if(n>0)
-            {
-                //目前先简单把数据转成字符串输入
-                buff[n]=0;
-                cout<<"recv message:"<<buff<<endl;
+    // static void* threadRoutine(void* args)
+    // {
+    //     threadData* td=static_cast<threadData*>(args);
+    //     td->_self->serverIO(td->_sock);
+    //     delete td;
+    //     return nullptr;
+    // }
 
-                string outbuff=buff;
-                write(sock,outbuff.c_str(),outbuff.size());
-            }
-            else if(n ==0)
-            {
-                // cout<<"client quit, me too!"<<endl;
-                logMessage(NORMAL,"client quit sock:%d closed",sock);
-                break;
-            }
-        }
-        close(sock);//对一个已经使用完毕的sock，我们要关闭这个sock，要不然会导致，文件描述符泄漏
-    }
 private:
     uint16_t _port;
     int _listsocket;

@@ -1,6 +1,6 @@
 #include "tcpServer.hpp"
 #include <memory>
-
+#include "daemon.hpp"
 
 
 static void Usage(string proc)
@@ -19,6 +19,7 @@ int main(int argc,char* argv[])
 
     std::unique_ptr<tcpServer> tser(new tcpServer(port));
     tser->initServer();
+    daemonSelf();//脱离前台成为守护进程
     tser->start();
     return 0;
 }

@@ -18,7 +18,7 @@
 
 using namespace std;
 
-#define NUM 1024
+#define NUMS 1024
 const char *to_levelstr(int level)
 {
     switch (level)
@@ -41,13 +41,13 @@ const char *to_levelstr(int level)
 void logMessage(int level, const char *format, ...)
 {
     // [日志等级] [时间戳/时间] [pid] [messge]
-    char buff[NUM];
+    char buff[NUMS];
     time_t nowtime;
     time(&nowtime);
     tm *p = localtime(&nowtime);
     snprintf(buff, sizeof buff, " [%s][%4d.%02d.%02d %02d:%02d:%02d] [%d] ", to_levelstr(level), p->tm_year + 1900, p->tm_mon + 1, p->tm_mday, p->tm_hour, p->tm_min, p->tm_sec, getpid());
 
-    char logcontent[NUM];
+    char logcontent[NUMS];
     va_list arg;
     va_start(arg, format);
     vsnprintf(logcontent, sizeof(logcontent), format, arg);
